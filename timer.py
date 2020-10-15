@@ -7,9 +7,12 @@
 clr [任务名] -> 清除某个任务或清空所有任务
 """
 import datetime
+from typing import Optional, Union
+
+TTimeOrDelta = Union[datetime.datetime, datetime.timedelta]
 
 
-def time2s(time_or_delta):
+def time2s(time_or_delta: TTimeOrDelta) -> str:
     return str(time_or_delta)[:-7]
 
 
@@ -27,7 +30,7 @@ class Timer:
         for name, start in self.tasks.items():
             print(f'\t{name}\t{time2s(start)}\t{time2s(now - start)}')
 
-    def create_or_show(self, name):
+    def create_or_show(self, name: str):
         if name in self.tasks:
             start = self.tasks[name]
             print(
@@ -41,7 +44,7 @@ class Timer:
             self.tasks[name] = now
             print(f'🍺 添加成功：{name}\t开始时间：{time2s(now)}')
 
-    def clr(self, name=None):
+    def clr(self, name: Optional[str] = None):
         if not name:
             self.tasks.clear()
             print('🍺 所有任务已清除')
